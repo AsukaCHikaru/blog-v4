@@ -12,6 +12,7 @@ const parseNotionPageObjectToPostSummary = (
   pageObject: NotionPage
 ): PostSummary => {
   return {
+    id: pageObject.id,
     title: pageObject.properties?.Name.title[0].plain_text || "",
     category: pageObject.properties?.category.select.name as PostCategory,
     publishedDate: pageObject.properties?.published.date.start || "",
