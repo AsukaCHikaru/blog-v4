@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES5",
+    "baseUrl": "./src",
     "module": "CommonJS",
     "lib": ["DOM", "ES2020"],
     "noImplicitAny": true,

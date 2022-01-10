@@ -1,5 +1,6 @@
 import * as webpack from "webpack";
 import { resolve } from "path";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 const config: webpack.Configuration = {
   context: resolve(__dirname),
@@ -28,6 +29,11 @@ const config: webpack.Configuration = {
     ],
   },
   resolve: {
+    plugins: [
+      new TsconfigPathsPlugin({
+        configFile: "tsconfig.json",
+      }),
+    ],
     extensions: [".ts", ".tsx", ".json", ".js"],
   },
   devtool: "inline-source-map",
