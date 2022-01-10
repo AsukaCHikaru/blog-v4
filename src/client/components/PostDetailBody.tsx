@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { NotionPageChildrenResponse } from "client/types/notion";
+import { PostBodyBlock } from "./PostBodyBlock";
 
 interface OwnProps {
   postDetail: NotionPageChildrenResponse;
@@ -9,17 +10,9 @@ interface OwnProps {
 export const PostDetailBody: React.VFC<OwnProps> = ({ postDetail }) => {
   return (
     <div>
-      {postDetail.results.map((block) => {
-        if (block.paragraph) {
-          return (
-            <p>
-              {block.paragraph.text?.map((t) => (
-                <span>{t.plain_text}</span>
-              ))}
-            </p>
-          );
-        }
-      })}
+      {postDetail.results.map((block) => (
+        <PostBodyBlock block={block} />
+      ))}
     </div>
   );
 };

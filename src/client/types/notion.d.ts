@@ -28,41 +28,92 @@ export type NotionPage = {
   url?: string;
 };
 
-export type NotionBlock = {
+type NotionBlockBase = {
   object: "block";
   id: string;
   created_time?: string;
   last_edited_time?: string;
   has_children?: boolean;
   archived?: boolean;
-  type: NotionBlockTypes;
-  paragraph?: {
+};
+
+type NotionParagraphBlock = NotionBlockBase & {
+  type: "paragraph";
+  paragraph: {
     text?: NotionRichTextObject[];
     children?: NotionBlock[];
   };
-  heading_1?: {
+};
+
+type NotionHeading1Block = NotionBlockBase & {
+  type: "heading_1";
+  heading_1: {
     text: NotionRichTextObject[];
   };
-  heading_2?: {
+};
+
+type NotionHeading2Block = NotionBlockBase & {
+  type: "heading_2";
+  heading_2: {
     text: NotionRichTextObject[];
   };
-  heading_3?: {
+};
+
+type NotionHeading3Block = NotionBlockBase & {
+  type: "heading_3";
+  heading_3: {
     text: NotionRichTextObject[];
   };
-  bulleted_list_item?: {
+};
+
+type NotionBulletedListBlock = NotionBlockBase & {
+  type: "bulleted_list_item";
+  bulleted_list_item: {
     text: NotionRichTextObject[];
   };
-  numbered_list_item?: {
+};
+
+type NotionNumberedListBlock = NotionBlockBase & {
+  type: "numbered_list_item";
+  numbered_list_item: {
     text: NotionRichTextObject[];
   };
+};
+
+type NotionCodeBlock = NotionBlockBase & {
+  type: "code";
   code?: {
     text: NotionRichTextObject[];
     language: NotionCodeLanguageTypes;
   };
-  image?: NotionImageObject;
-  video?: NotionVideoObject;
-  bookmark?: NotionBookmarkObject;
 };
+
+type NotionImageBlock = NotionBlockBase & {
+  type: "image";
+  image: NotionImageObject;
+};
+
+type NotionVideoBlock = NotionBlockBase & {
+  type: "video";
+  video: NotionVideoObject;
+};
+
+type NotionBookmarkBlock = NotionBlockBase & {
+  type: "bookmark";
+  bookmark: NotionBookmarkBlock;
+};
+
+export type NotionBlock =
+  | NotionParagraphBlock
+  | NotionHeading1Block
+  | NotionHeading2Block
+  | NotionHeading3Block
+  | NotionBulletedListBlock
+  | NotionNumberedListBlock
+  | NotionCodeBlock
+  | NotionImageBlock
+  | NotionVideoBlock
+  | NotionBookmarkBlock;
 
 type NotionRichTextObject = {
   type: "text";
