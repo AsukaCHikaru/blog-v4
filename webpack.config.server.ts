@@ -32,6 +32,15 @@ const config: webpack.Configuration = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NOTION_API_TOKEN: JSON.stringify(process.env.NOTION_API_TOKEN) || "",
+        NOTION_DATABASE_ID:
+          JSON.stringify(process.env.NOTION_DATABASE_ID) || "",
+      },
+    }),
+  ],
   resolve: {
     extensions: [".ts", ".tsx", ".json", ".js"],
   },

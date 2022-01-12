@@ -1,6 +1,14 @@
 import * as express from "express";
 
-export const renderer = (req: express.Request, res: express.Response) => {
+export const renderer = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  if (/\/api\/postList/.test(req.path) || /\/api\/postDetail/.test(req.path)) {
+    next();
+    return;
+  }
   res.send(`
     <!DOCTYPE HTML>
     <html>
