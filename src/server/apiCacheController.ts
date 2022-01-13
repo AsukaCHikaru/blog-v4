@@ -11,6 +11,7 @@ type CacheControllerItem<T> = {
 export class CacheController {
   constructor() {}
 
+  // todo: fix this type shit
   get(key: "postList" | "postDetail") {
     return this[key].data;
   }
