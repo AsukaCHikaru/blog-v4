@@ -11,7 +11,7 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
     return (
       <p>
         {block.paragraph.text?.map((t) => (
-          <span>{t.text.content}</span>
+          <span key={t.plain_text}>{t.text.content}</span>
         ))}
       </p>
     );
@@ -29,7 +29,7 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
     return (
       <ol>
         {block.numbered_list_item.text.map((t) => (
-          <li>{t.text.content}</li>
+          <li key={t.plain_text}>{t.text.content}</li>
         ))}
       </ol>
     );
@@ -38,7 +38,7 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
     return (
       <ul>
         {block.bulleted_list_item.text.map((t) => (
-          <li>{t.text.content}</li>
+          <li key={t.plain_text}>{t.text.content}</li>
         ))}
       </ul>
     );

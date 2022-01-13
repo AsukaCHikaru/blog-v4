@@ -13,7 +13,7 @@ export const PostDetailPageHeader: React.VFC<OwnProps> = ({ postSummary }) => {
       <h4>{postSummary.publishedDate}</h4>
       <div style={{ display: "flex" }}>
         {postSummary.tags.map((tag) => (
-          <span>{tag}</span>
+          <span key={tag}>{tag}</span>
         ))}
       </div>
     </div>

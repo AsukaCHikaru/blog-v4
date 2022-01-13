@@ -11,7 +11,7 @@ export const PostDetailBody: React.VFC<OwnProps> = ({ postDetail }) => {
   return (
     <div>
       {postDetail.results.map((block) => (
-        <PostBodyBlock block={block} />
+        <PostBodyBlock block={block} key={block.id} />
       ))}
     </div>
   );
