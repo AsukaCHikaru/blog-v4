@@ -12,8 +12,6 @@ const NOTION_API_BASEURL = "https://api.notion.com/v1";
 
 const cacheController = new CacheController();
 
-const CACHE_EXPIRE_SECOND = 5;
-
 export const axiosInstance = axios.create({
   baseURL: NOTION_API_BASEURL,
   headers: {
@@ -39,11 +37,7 @@ export const postListFilterSorter = {
 export const getNotionPageList = async () => {
   const key = "postList";
 
-  if (
-    cacheController.get(key).data &&
-    getSecondsDiff(getTimeNow(), cacheController.get(key).lastUpdated) <
-      CACHE_EXPIRE_SECOND * 60 * 1000
-  ) {
+  if (cacheController.hasFreshData(key)) {
     return cacheController.get(key).data as NotionPageListResponse;
   }
 
@@ -56,14 +50,11 @@ export const getNotionPageList = async () => {
   return response.data;
 };
 
+// todo: only save one post now
 export const getNotionBlockList = async (postId: string) => {
   const key = "postDetail";
 
-  if (
-    cacheController.get(key).data &&
-    getSecondsDiff(getTimeNow(), cacheController.get(key).lastUpdated) <
-      CACHE_EXPIRE_SECOND * 60 * 1000
-  ) {
+  if (cacheController.hasFreshData(key)) {
     return cacheController.get(key).data as NotionPageChildrenResponse;
   }
 

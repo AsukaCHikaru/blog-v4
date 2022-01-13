@@ -2,12 +2,14 @@ import {
   NotionPageChildrenResponse,
   NotionPageListResponse,
 } from "client/types/notion";
-import { getTimeNow } from "server/dateTimeUtils";
+import { getSecondsDiff, getTimeNow } from "server/dateTimeUtils";
 
 type CacheControllerItem<T> = {
   data?: T;
   lastUpdated: string;
 };
+
+const CACHE_EXPIRE_SECOND = Number(process.env.CACHE_EXPIRE_SECOND) || 5 * 60;
 
 export class CacheController {
   constructor() {}
@@ -20,6 +22,14 @@ export class CacheController {
   set(key: "postList" | "postDetail", data: any) {
     this[key].data = data;
     this[key].lastUpdated = getTimeNow();
+  }
+
+  hasFreshData(key: "postList" | "postDetail") {
+    return (
+      this[key].data &&
+      getSecondsDiff(getTimeNow(), this[key].lastUpdated) <
+        CACHE_EXPIRE_SECOND * 1000
+    );
   }
 
   private postList: CacheControllerItem<NotionPageListResponse> = {
