@@ -1,8 +1,8 @@
 import * as express from "express";
 import { resolve } from "path";
 
-import { apiProxyHandler } from "./apiProxyHandler";
-import { renderer } from "./renderer";
+import { apiProxyHandler } from "server/apiProxyHandler";
+import { renderer } from "server/renderer";
 
 const app = express();
 
