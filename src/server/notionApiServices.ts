@@ -1,4 +1,8 @@
 import axios from "axios";
+import {
+  NotionPageChildrenResponse,
+  NotionPageListResponse,
+} from "client/types/notion";
 
 const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
@@ -27,7 +31,7 @@ export const postListFilterSorter = {
 };
 
 export const getNotionPageList = async () => {
-  const response = await axiosInstance.post(
+  const response = await axiosInstance.post<NotionPageListResponse>(
     `${NOTION_API_BASEURL}/databases/${NOTION_DATABASE_ID}/query`,
     postListFilterSorter
   );
@@ -35,7 +39,7 @@ export const getNotionPageList = async () => {
 };
 
 export const getNotionBlockList = async (postId: string) => {
-  const response = await axiosInstance.get(
+  const response = await axiosInstance.get<NotionPageChildrenResponse>(
     `${NOTION_API_BASEURL}/blocks/${postId}/children`
   );
   return response.data;

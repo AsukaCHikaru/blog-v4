@@ -11,26 +11,58 @@ import {
 
 import { App } from "client/App";
 import { parseNotionPageListResponse } from "client/utils/parsers";
-import { getNotionPageList } from "server/notionApiServices";
+import {
+  getNotionBlockList,
+  getNotionPageList,
+} from "server/notionApiServices";
+import {
+  POST_DETAIL_QUERY_KEY,
+  POST_LIST_QUERY_KEY,
+} from "client/services/apiCore";
+import { PostSummary } from "client/types";
 
 export const renderer = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  if (/\/api\/postList/.test(req.path) || /\/api\/postDetail/.test(req.path)) {
+  if (
+    /\/api\/postList/.test(req.path) ||
+    /\/api\/postDetail\/\w+/.test(req.path)
+  ) {
     next();
     return;
   }
 
   let htmlBody = "";
   // todo: helmet
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("postList", async () => {
-    const data = await getNotionPageList();
 
-    return parseNotionPageListResponse(data);
-  });
+  // React Query prefetch
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(
+    POST_LIST_QUERY_KEY,
+    async (): Promise<PostSummary[]> => {
+      const data = await getNotionPageList();
+
+      return parseNotionPageListResponse(data);
+    }
+  );
+  if (/post\/\w+/.test(req.path)) {
+    const postPathname = req.path.replace(/\/post\/(.+)/, "$1");
+    const postId = queryClient
+      .getQueryData<PostSummary[]>(POST_LIST_QUERY_KEY)
+      ?.find((post) => post.pathname === postPathname)?.id;
+
+    if (postId) {
+      await queryClient.prefetchQuery(
+        [POST_DETAIL_QUERY_KEY, postId],
+        async () => {
+          const data = await getNotionBlockList(postId);
+          return data;
+        }
+      );
+    }
+  }
   const dehydratedState = dehydrate(queryClient);
 
   try {
