@@ -33,6 +33,7 @@
     "axios": "0.24.0",
     "babel": "6.23.0",
     "babel-loader": "8.2.3",
+    "dayjs": "1.10.7",
     "express": "4.17.2",
     "fastify": "3.25.3",
     "react": "17.0.2",
