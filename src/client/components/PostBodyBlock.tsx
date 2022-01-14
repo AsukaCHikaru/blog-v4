@@ -48,10 +48,10 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   }
   if (block.type === "image") {
     if (block.image.type === "file") {
-      return <img src={block.image.file.url} />;
+      return <img src={block.image.file.url} loading="lazy" />;
     }
     if (block.image.type === "external") {
-      return <img src={block.image.external.url} />;
+      return <img src={block.image.external.url} loading="lazy" />;
     }
   }
   // todo: video
