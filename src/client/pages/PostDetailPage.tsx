@@ -1,24 +1,21 @@
 import * as React from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { usePostList } from "client/hooks/usePostList";
 import { usePostDetail } from "client/hooks/usePostDetail";
 import { PostDetailPageHeader } from "client/components/PostDetailPageHeader";
 import { PostDetailBody } from "client/components/PostDetailBody";
+import { PostDetailPageParams } from "client/types";
 
 interface OwnProps {}
 
 export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
-  const location = useLocation();
-  const postPathname = React.useMemo(
-    () => location.pathname.replace("/post/", ""),
-    [location]
-  );
+  const { pathname } = useParams<PostDetailPageParams>();
   const postList = usePostList();
-  const postDetail = usePostDetail(postPathname);
+  const postDetail = usePostDetail(pathname || "");
   const postSummary = React.useMemo(
-    () => postList.data?.find((post) => post.pathname === postPathname),
-    [postList, postPathname]
+    () => postList.data?.find((post) => post.pathname === pathname),
+    [postList, pathname]
   );
 
   if (
@@ -31,9 +28,9 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   }
 
   return (
-    <div>
+    <>
       <PostDetailPageHeader postSummary={postSummary} />
       <PostDetailBody postDetail={postDetail.data} />
-    </div>
+    </>
   );
 };

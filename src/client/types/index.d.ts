@@ -15,3 +15,7 @@ export type PostListPageParams = {
   category?: PostCategory;
   tag?: string;
 };
+
+export type PostDetailPageParams = {
+  pathname: string;
+};
