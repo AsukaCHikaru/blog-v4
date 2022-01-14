@@ -40,6 +40,23 @@ export const postListFilterSorter = {
   ],
 };
 
+const fetchNotionPageList = async () => {
+  const response = await axiosInstance.post<NotionPageListResponse>(
+    `${NOTION_API_BASEURL}/databases/${NOTION_DATABASE_ID}/query`,
+    postListFilterSorter
+  );
+
+  return response.data;
+};
+
+const fetchNotionBlockList = async (postId: string) => {
+  const response = await axiosInstance.get<NotionPageChildrenResponse>(
+    `${NOTION_API_BASEURL}/blocks/${postId}/children`
+  );
+
+  return response.data;
+};
+
 export const getNotionPageList = async () => {
   const key = "postList";
 
@@ -47,13 +64,10 @@ export const getNotionPageList = async () => {
     return cacheController.get(key) as NotionPageListResponse;
   }
 
-  const response = await axiosInstance.post<NotionPageListResponse>(
-    `${NOTION_API_BASEURL}/databases/${NOTION_DATABASE_ID}/query`,
-    postListFilterSorter
-  );
-  cacheController.update("postList", response.data);
+  const data = await fetchNotionPageList();
+  cacheController.update("postList", data);
 
-  return response.data;
+  return data;
 };
 
 export const getNotionBlockList = async (postId: string) => {
@@ -63,10 +77,8 @@ export const getNotionBlockList = async (postId: string) => {
     return cacheController.get(key) as NotionPageChildrenResponse;
   }
 
-  const response = await axiosInstance.get<NotionPageChildrenResponse>(
-    `${NOTION_API_BASEURL}/blocks/${postId}/children`
-  );
-  cacheController.update(key, response.data);
+  const data = await fetchNotionBlockList(postId);
+  cacheController.update(key, data);
 
-  return response.data;
+  return data;
 };
