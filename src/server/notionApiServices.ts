@@ -1,16 +1,22 @@
 import axios from "axios";
+
 import {
   NotionPageChildrenResponse,
   NotionPageListResponse,
 } from "client/types/notion";
-import { getSecondsDiff, getTimeNow } from "server/dateTimeUtils";
 import { CacheController } from "server/apiCacheController";
 
 const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN;
 const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID;
 const NOTION_API_BASEURL = "https://api.notion.com/v1";
 
-const cacheController = new CacheController();
+const cacheController = new CacheController([
+  {
+    key: "postList",
+    data: undefined,
+    expireSecond: 5,
+  },
+]);
 
 export const axiosInstance = axios.create({
   baseURL: NOTION_API_BASEURL,
@@ -38,30 +44,30 @@ export const getNotionPageList = async () => {
   const key = "postList";
 
   if (cacheController.hasFreshData(key)) {
-    return cacheController.get(key).data as NotionPageListResponse;
+    return cacheController.get(key) as NotionPageListResponse;
   }
 
   const response = await axiosInstance.post<NotionPageListResponse>(
     `${NOTION_API_BASEURL}/databases/${NOTION_DATABASE_ID}/query`,
     postListFilterSorter
   );
-  cacheController.set("postList", response.data);
+  cacheController.update("postList", response.data);
 
   return response.data;
 };
 
 // todo: only save one post now
 export const getNotionBlockList = async (postId: string) => {
-  const key = "postDetail";
+  const key = `postDetail/${postId}`;
 
   if (cacheController.hasFreshData(key)) {
-    return cacheController.get(key).data as NotionPageChildrenResponse;
+    return cacheController.get(key) as NotionPageChildrenResponse;
   }
 
   const response = await axiosInstance.get<NotionPageChildrenResponse>(
     `${NOTION_API_BASEURL}/blocks/${postId}/children`
   );
-  cacheController.set(key, response.data);
+  cacheController.update(key, response.data);
 
   return response.data;
 };

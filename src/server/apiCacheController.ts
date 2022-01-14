@@ -1,44 +1,52 @@
-import {
-  NotionPageChildrenResponse,
-  NotionPageListResponse,
-} from "client/types/notion";
 import { getSecondsDiff, getTimeNow } from "server/dateTimeUtils";
 
-type CacheControllerItem<T> = {
-  data?: T;
-  lastUpdated: string;
+type CacheControllerItem = {
+  key: string;
+  data: any;
+  expireSecond: number;
 };
 
-const CACHE_EXPIRE_SECOND = Number(process.env.CACHE_EXPIRE_SECOND) || 5 * 60;
-
 export class CacheController {
-  constructor() {}
-
-  // todo: fix this type shit
-  get(key: "postList" | "postDetail") {
-    return this[key];
+  constructor(initialData: CacheControllerItem[]) {
+    initialData.forEach((item) => {
+      this.items[item.key] = {
+        data: item.data,
+        expire: item.expireSecond,
+        lastUpdated: "",
+      };
+    });
   }
 
-  set(key: "postList" | "postDetail", data: any) {
-    this[key].data = data;
-    this[key].lastUpdated = getTimeNow();
+  get(key: string) {
+    console.log(`get cache from: ${key}`);
+    return this.items[key].data;
   }
 
-  hasFreshData(key: "postList" | "postDetail") {
+  update(key: string, data: any) {
+    console.log(`update cache for: ${key}`);
+    this.items[key] = {
+      ...this.items[key],
+      data,
+      lastUpdated: getTimeNow(),
+      expire: 5,
+    };
+  }
+
+  hasFreshData(key: string) {
+    if (!this.items[key] || !this.items[key].lastUpdated) {
+      return false;
+    }
+    console.log(`lastUpdated for ${key}: ${this.items[key].lastUpdated}`);
+
     return (
-      this[key].data &&
-      getSecondsDiff(getTimeNow(), this[key].lastUpdated) <
-        CACHE_EXPIRE_SECOND * 1000
+      this.items[key].data &&
+      getSecondsDiff(getTimeNow(), this.items[key].lastUpdated) <
+        this.items[key].expire * 1000
     );
   }
 
-  private postList: CacheControllerItem<NotionPageListResponse> = {
-    data: undefined,
-    lastUpdated: "",
-  };
-
-  private postDetail: CacheControllerItem<NotionPageChildrenResponse> = {
-    data: undefined,
-    lastUpdated: "",
-  };
+  private items: Record<
+    string,
+    { data: any; lastUpdated: string; expire: number }
+  > = {};
 }
