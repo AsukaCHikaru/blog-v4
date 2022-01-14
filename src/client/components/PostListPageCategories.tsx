@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { Link, useParams } from "react-router-dom";
 
-import { CategoryParams, PostCategory } from "client/types";
+import { PostCategory, PostListPageParams } from "client/types";
 
 const categoryText: Record<PostCategory | "all", string> = {
   all: "ALL",
@@ -12,12 +12,15 @@ const categoryText: Record<PostCategory | "all", string> = {
 };
 
 export const PostListPageCategories: React.VFC = () => {
-  const params = useParams<CategoryParams>();
+  const params = useParams<PostListPageParams>();
 
   return (
     <StyledContainer>
       <StyledCategoryContainer>
-        <PostListPageCategoryItem type="all" selected={!params.category} />
+        <PostListPageCategoryItem
+          type="all"
+          selected={!params.category && !params.tag}
+        />
         <PostListPageCategoryItem
           type="gaming"
           selected={params.category === "gaming"}
@@ -31,6 +34,7 @@ export const PostListPageCategories: React.VFC = () => {
           selected={params.category === "others"}
         />
       </StyledCategoryContainer>
+      <PostListPageTagItem tag={params.tag} />
     </StyledContainer>
   );
 };
@@ -52,6 +56,17 @@ const PostListPageCategoryItem: React.VFC<CategoryItem> = ({
       {categoryText[type]}
     </StyledCategory>
   );
+};
+interface TagItem {
+  tag?: string;
+}
+
+const PostListPageTagItem: React.VFC<TagItem> = ({ tag }) => {
+  if (!tag) {
+    return null;
+  }
+
+  return <StyledSelectedTag>#{tag}</StyledSelectedTag>;
 };
 
 const StyledContainer = styled.div`
@@ -93,5 +108,22 @@ const StyledCategory = styled(Link)<{ selected: boolean }>`
 
   @media (max-width: ${(props) => props.theme.breakpoint.mobile}) {
     font-size: 15px;
+  }
+`;
+
+const StyledSelectedTag = styled.span`
+  padding: 0 10px;
+  font-family: "Courier New", Courier, "Noto Sans JP", monospace;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 100;
+  color: #131313;
+  text-decoration: underline;
+  border-left: solid 1px #131313;
+
+  @media (max-width: 400px) {
+    font-size: 15px;
+    border: none;
+    padding: 0;
   }
 `;

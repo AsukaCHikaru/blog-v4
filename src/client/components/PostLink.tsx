@@ -19,7 +19,7 @@ export const PostLink: React.VFC<OwnProps> = ({ postSummary }) => {
       <StyledPostPublishDate>
         {dateParser(postSummary.publishedDate)}
       </StyledPostPublishDate>
-      <StyledPostTagContainer style={{ display: "flex" }}>
+      <StyledPostTagContainer>
         {postSummary.tags.map((tag) => (
           <StyledPostTag to={`/tag/${tag}`} key={tag}>
             #{tag}

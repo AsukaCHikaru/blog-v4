@@ -11,6 +11,7 @@ export type PostSummary = {
   id_zhTW?: string;
 };
 
-export type CategoryParams = {
-  category: PostCategory;
+export type PostListPageParams = {
+  category?: PostCategory;
+  tag?: string;
 };
