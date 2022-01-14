@@ -1,4 +1,6 @@
 import * as express from "express";
+
+import { parseNotionPageListResponse } from "client/utils/parsers";
 import {
   getNotionBlockList,
   getNotionPageList,
@@ -20,8 +22,18 @@ export const apiProxyHandler = async (
   }
 
   if (/\/api\/postDetail\/\w+/.test(req.path)) {
-    const postId = req.path.replace("/api/postDetail/", "");
+    const postPathname = req.path.replace("/api/postDetail/", "");
     try {
+      const postList = parseNotionPageListResponse(await getNotionPageList());
+      const postId = postList.find(
+        (post) => post.pathname === postPathname
+      )?.id;
+
+      if (!postId) {
+        res.status(404).send({ status: 404, error: "Post not found!" });
+        return;
+      }
+
       const data = await getNotionBlockList(postId);
 
       res.send(data);

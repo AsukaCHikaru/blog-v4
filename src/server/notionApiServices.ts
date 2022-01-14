@@ -14,7 +14,7 @@ const cacheController = new CacheController([
   {
     key: "postList",
     data: undefined,
-    expireSecond: 5,
+    expireSecond: 5 * 60,
   },
 ]);
 
@@ -56,7 +56,6 @@ export const getNotionPageList = async () => {
   return response.data;
 };
 
-// todo: only save one post now
 export const getNotionBlockList = async (postId: string) => {
   const key = `postDetail/${postId}`;
 

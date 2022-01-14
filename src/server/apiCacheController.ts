@@ -12,7 +12,7 @@ export class CacheController {
       this.items[item.key] = {
         data: item.data,
         expire: item.expireSecond,
-        lastUpdated: "",
+        lastUpdated: "", // todo: fix this
       };
     });
   }
@@ -28,7 +28,7 @@ export class CacheController {
       ...this.items[key],
       data,
       lastUpdated: getTimeNow(),
-      expire: 5,
+      expire: 5 * 60,
     };
   }
 

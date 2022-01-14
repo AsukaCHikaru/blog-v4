@@ -10,20 +10,16 @@ interface OwnProps {}
 
 export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   const location = useLocation();
-  const postList = usePostList();
-  const [postId, setPostId] = React.useState<string>("");
-  const postDetail = usePostDetail(postId);
-
-  const postSummary = postList.data?.find(
-    (post) => post.pathname === location.pathname.replace("/post/", "")
+  const postPathname = React.useMemo(
+    () => location.pathname.replace("/post/", ""),
+    [location]
   );
-
-  React.useEffect(() => {
-    if (!postSummary || !postSummary.id) {
-      return;
-    }
-    setPostId(postSummary.id);
-  }, [postSummary]);
+  const postList = usePostList();
+  const postDetail = usePostDetail(postPathname);
+  const postSummary = React.useMemo(
+    () => postList.data?.find((post) => post.pathname === postPathname),
+    [postList, postPathname]
+  );
 
   if (
     postList.isLoading ||
