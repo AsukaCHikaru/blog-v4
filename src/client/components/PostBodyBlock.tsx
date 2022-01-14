@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { NotionBlock } from "client/types/notion";
+import { NotionBlock, NotionRichTextObject } from "client/types/notion";
 
 interface OwnProps {
   block: NotionBlock;
@@ -11,8 +11,8 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   if (block.type === "paragraph") {
     return (
       <StyledP>
-        {block.paragraph.text?.map((t) => (
-          <span key={t.plain_text}>{t.text.content}</span>
+        {block.paragraph.text?.map((item, i) => (
+          <RichTextItem item={item} key={item.plain_text + i} />
         ))}
       </StyledP>
     );
@@ -38,15 +38,19 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   if (block.type === "bulleted_list_item") {
     return (
       <ul>
-        {block.bulleted_list_item.text.map((t) => (
-          <StyledLi key={t.plain_text}>{t.text.content}</StyledLi>
-        ))}
+        <StyledLi key={block.id}>
+          {block.bulleted_list_item.text.map((item, i) => (
+            <RichTextItem item={item} key={item.plain_text + i} />
+          ))}
+        </StyledLi>
       </ul>
     );
   }
   if (block.type === "code") {
     return (
-      <StyledCode>{block.code?.text.map((t) => t.text.content)}</StyledCode>
+      <pre>
+        <StyledCode>{block.code?.text.map((t) => t.text.content)}</StyledCode>
+      </pre>
     );
   }
   if (block.type === "image") {
@@ -60,6 +64,25 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   // todo: video
   // todo: bookmark
   return null;
+};
+
+interface RichTextItemProps {
+  item: NotionRichTextObject;
+}
+
+const RichTextItem: React.VFC<RichTextItemProps> = ({ item }) => {
+  if (item.href) {
+    return (
+      <StyledA href={item.href} rel="noreferrer noopener" target="_blank">
+        {item.plain_text}
+      </StyledA>
+    );
+  }
+
+  if (item.annotations.code) {
+    return <StyledCode>{item.plain_text}</StyledCode>;
+  }
+  return <span>{item.text.content}</span>;
 };
 
 const StyledP = styled.p`
@@ -102,9 +125,7 @@ const StyledH4 = styled.h4`
 `;
 
 const StyledLi = styled.li`
-  & p {
-    margin-bottom: 0;
-  }
+  font-size: 18px;
 `;
 
 const StyledA = styled.a`

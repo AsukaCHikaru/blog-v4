@@ -227,7 +227,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
-  h1, h2, h3, h4, h5, h6, a, p {
+  h1, h2, h3, h4, h5, h6, a, p, ul, ol {
     font-family: 'Noto Serif JP', serif;
     color: #131313;
   }
