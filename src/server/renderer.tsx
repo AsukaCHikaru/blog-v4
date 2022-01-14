@@ -8,6 +8,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
+import { ServerStyleSheet } from "styled-components";
 
 import { App } from "client/App";
 import { parseNotionPageListResponse } from "client/utils/parsers";
@@ -65,24 +66,35 @@ export const renderer = async (
   }
   const dehydratedState = dehydrate(queryClient);
 
+  // styled-components
+  const sheet = new ServerStyleSheet();
+  let styleTags = "";
+
   try {
     htmlBody = ReactDOMServer.renderToString(
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={dehydratedState}>
-          <StaticRouter location={req.url}>
-            <App />
-          </StaticRouter>
-        </Hydrate>
-      </QueryClientProvider>
+      sheet.collectStyles(
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={dehydratedState}>
+            <StaticRouter location={req.url}>
+              <App />
+            </StaticRouter>
+          </Hydrate>
+        </QueryClientProvider>
+      )
     );
+
+    styleTags = sheet.getStyleTags();
   } catch (error) {
     console.error(error);
+  } finally {
+    sheet.seal();
   }
 
   res.send(`
     <!DOCTYPE HTML>
     <html>
       <head>
+        ${styleTags}
         <script defer src="/static/bundle.js"></script>
       </head>
       <body>
