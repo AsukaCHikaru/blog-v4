@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { NotionBlock, NotionRichTextObject } from "client/types/notion";
+import { CodeBlock } from "./CodeBlock";
 
 interface OwnProps {
   block: NotionBlock;
@@ -47,11 +48,7 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
     );
   }
   if (block.type === "code") {
-    return (
-      <pre>
-        <StyledCode>{block.code?.text.map((t) => t.text.content)}</StyledCode>
-      </pre>
-    );
+    return <CodeBlock>{block.code?.text[0].text.content}</CodeBlock>;
   }
   if (block.type === "image") {
     if (block.image.type === "file") {
