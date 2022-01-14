@@ -13,6 +13,7 @@ export const App: React.VFC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<PostListPage />} />
+          <Route path="/category/:category" element={<PostListPage />} />
           <Route path="/post/:pathname" element={<PostDetailPage />} />
         </Routes>
       </Layout>

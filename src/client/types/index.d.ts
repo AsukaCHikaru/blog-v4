@@ -10,3 +10,7 @@ export type PostSummary = {
   language: string[];
   id_zhTW?: string;
 };
+
+export type CategoryParams = {
+  category: PostCategory;
+};

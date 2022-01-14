@@ -13,4 +13,7 @@ export const theme: DefaultTheme = {
       code: "#dddddd",
     },
   },
+  breakpoint: {
+    mobile: "400px",
+  },
 };
