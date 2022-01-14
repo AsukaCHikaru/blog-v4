@@ -9,7 +9,7 @@ export const theme: DefaultTheme = {
       date: "#333333",
     },
     background: {
-      primary: "#eeeeee",
+      primary: "#eaeaea",
       code: "#dddddd",
     },
   },
