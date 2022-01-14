@@ -94,6 +94,7 @@ export const renderer = async (
     <!DOCTYPE HTML>
     <html>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         ${styleTags}
         <script defer src="/static/bundle.js"></script>
       </head>

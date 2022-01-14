@@ -7,8 +7,10 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query";
+import { ThemeProvider } from "styled-components";
 
 import { App } from "client/App";
+import { theme } from "client/theme";
 
 declare let window: { __REACT_QUERY_STATE__: DehydratedState };
 const dehydratedState = window.__REACT_QUERY_STATE__;
@@ -18,7 +20,9 @@ ReactDOM.hydrate(
   <QueryClientProvider client={queryClient}>
     <Hydrate state={dehydratedState}>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Hydrate>
   </QueryClientProvider>,
