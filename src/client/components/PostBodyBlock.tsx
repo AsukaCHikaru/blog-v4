@@ -51,10 +51,10 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   }
   if (block.type === "image") {
     if (block.image.type === "file") {
-      return <img src={block.image.file.url} loading="lazy" />;
+      return <img src={block.image.file.url} alt="" loading="lazy" />;
     }
     if (block.image.type === "external") {
-      return <img src={block.image.external.url} loading="lazy" />;
+      return <img src={block.image.external.url} alt="" loading="lazy" />;
     }
   }
   // todo: video
@@ -91,13 +91,13 @@ const StyledH3 = styled.h3`
 `;
 
 const StyledH4 = styled.h4`
-  font-size: 24px;
-  line-height: 40px;
+  font-size: 20px;
+  line-height: 1.8;
   font-weight: 700;
 
   @media (max-width: 400px) {
-    font-size: 21px;
-    line-height: 30px;
+    font-size: 19px;
+    line-height: 28px;
   }
 `;
 
