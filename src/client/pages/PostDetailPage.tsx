@@ -6,6 +6,7 @@ import { usePostDetail } from "client/hooks/usePostDetail";
 import { PostDetailPageHeader } from "client/components/PostDetailPageHeader";
 import { PostDetailBody } from "client/components/PostDetailBody";
 import { PostDetailPageParams } from "client/types";
+import { Footer } from "client/components/Footer";
 
 interface OwnProps {}
 
@@ -31,6 +32,7 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
     <>
       <PostDetailPageHeader postSummary={postSummary} />
       <PostDetailBody postDetail={postDetail.data} />
+      <Footer />
     </>
   );
 };

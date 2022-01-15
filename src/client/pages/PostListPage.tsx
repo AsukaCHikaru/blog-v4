@@ -6,6 +6,7 @@ import { PostListPageParams } from "client/types";
 import { PostListPageHeader } from "client/components/PostListPageHeader";
 import { PostLink } from "client/components/PostLink";
 import { usePostList } from "client/hooks/usePostList";
+import { Footer } from "client/components/Footer";
 
 export const PostListPage: React.VFC = () => {
   const postList = usePostList();
@@ -39,6 +40,7 @@ export const PostListPage: React.VFC = () => {
           <PostLink postSummary={postSummary} key={postSummary.pathname} />
         ))}
       </div>
+      <Footer />
     </StyledContainer>
   );
 };

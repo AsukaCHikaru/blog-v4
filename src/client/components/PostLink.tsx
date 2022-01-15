@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { PostSummary } from "client/types";
-import { dateParser } from "client/utils/parsers";
+import { parseDateToEn } from "client/utils/dateTimeUtils";
 
 interface OwnProps {
   postSummary: PostSummary;
@@ -17,7 +17,7 @@ export const PostLink: React.VFC<OwnProps> = ({ postSummary }) => {
       </StyledPostTitle>
       {/** todo: lan */}
       <StyledPostPublishDate>
-        {dateParser(postSummary.publishedDate)}
+        {parseDateToEn(postSummary.publishedDate)}
       </StyledPostPublishDate>
       <StyledPostTagContainer>
         {postSummary.tags.map((tag) => (
