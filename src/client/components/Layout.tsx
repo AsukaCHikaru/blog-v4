@@ -6,17 +6,8 @@ interface OwnProps {
 }
 
 export const Layout: React.VFC<OwnProps> = ({ children }) => {
-  return (
-    <StyledScroller>
-      <StyledContainer>{children}</StyledContainer>
-    </StyledScroller>
-  );
+  return <StyledContainer>{children}</StyledContainer>;
 };
-
-const StyledScroller = styled.div`
-  height: 100%;
-  overflow-y: scroll;
-`;
 
 const StyledContainer = styled.div`
   height: 100%;

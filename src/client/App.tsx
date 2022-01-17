@@ -10,14 +10,12 @@ export const App: React.VFC = () => {
   return (
     <>
       <GlobalStyle />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<PostListPage />} />
-          <Route path="/category/:category" element={<PostListPage />} />
-          <Route path="/tag/:tag" element={<PostListPage />} />
-          <Route path="/post/:pathname" element={<PostDetailPage />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<PostListPage />} />
+        <Route path="/category/:category" element={<PostListPage />} />
+        <Route path="/tag/:tag" element={<PostListPage />} />
+        <Route path="/post/:pathname" element={<PostDetailPage />} />
+      </Routes>
     </>
   );
 };

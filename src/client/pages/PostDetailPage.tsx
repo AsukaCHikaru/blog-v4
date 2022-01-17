@@ -8,6 +8,8 @@ import { PostDetailBody } from "client/components/PostDetailBody";
 import { PostDetailPageParams } from "client/types";
 import { Footer } from "client/components/Footer";
 import { PostDetailPageFooter } from "client/components/PostDetailPageFooter";
+import { Scroller } from "client/components/Scroller";
+import { Layout } from "client/components/Layout";
 
 interface OwnProps {}
 
@@ -34,11 +36,13 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   }
 
   return (
-    <>
-      <PostDetailPageHeader postSummary={postSummary} />
-      <PostDetailBody postDetail={postDetail.data} />
-      <PostDetailPageFooter />
-      <Footer />
-    </>
+    <Scroller>
+      <Layout>
+        <PostDetailPageHeader postSummary={postSummary} />
+        <PostDetailBody postDetail={postDetail.data} />
+        <PostDetailPageFooter />
+        <Footer />
+      </Layout>
+    </Scroller>
   );
 };
