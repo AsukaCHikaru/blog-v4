@@ -52,10 +52,20 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   }
   if (block.type === "image") {
     if (block.image.type === "file") {
-      return <img src={block.image.file.url} alt="" loading="lazy" />;
+      return (
+        <ImgBlock
+          url={block.image.file.url}
+          caption={block.image.caption[0]?.plain_text}
+        />
+      );
     }
     if (block.image.type === "external") {
-      return <img src={block.image.external.url} alt="" loading="lazy" />;
+      return (
+        <ImgBlock
+          url={block.image.external.url}
+          caption={block.image.caption[0]?.plain_text}
+        />
+      );
     }
   }
   // todo: video
@@ -79,6 +89,23 @@ const RichTextItem: React.VFC<RichTextItemProps> = ({ item }) => {
   if (item.annotations.code) {
     return <StyledCode>{item.plain_text}</StyledCode>;
   }
+
+  if (item.annotations.bold) {
+    return <StyledBold>{item.text.content}</StyledBold>;
+  }
+
+  if (item.annotations.italic) {
+    return <StyledItalic>{item.text.content}</StyledItalic>;
+  }
+
+  if (item.annotations.underline) {
+    return <StyledUnderline>{item.text.content}</StyledUnderline>;
+  }
+
+  if (item.annotations.strikethrough) {
+    return <StyledStrikethrough>{item.text.content}</StyledStrikethrough>;
+  }
+
   return <span>{item.text.content}</span>;
 };
 
@@ -87,6 +114,22 @@ const StyledP = styled.p`
   line-height: 32px;
   margin-bottom: 32px;
   white-space: pre-wrap;
+`;
+
+const StyledBold = styled.span`
+  font-weight: bold;
+`;
+
+const StyledItalic = styled.span`
+  font-style: italic;
+`;
+
+const StyledUnderline = styled.span`
+  text-decoration: underline;
+`;
+
+const StyledStrikethrough = styled.span`
+  text-decoration: line-through;
 `;
 
 const StyledH2 = styled.h2`
@@ -139,6 +182,33 @@ const StyledCode = styled.code`
   font-size: 15px;
   color: #131313;
   border-radius: 5px;
+`;
+
+type ImgProps = {
+  url: string;
+  caption?: string;
+};
+
+const ImgBlock: React.VFC<ImgProps> = ({ url, caption }) => {
+  return (
+    <StyledImgWrapper>
+      <StyledImg src={url} alt="" loading="lazy" />
+      {caption ? <StyledImgCaption>{caption}</StyledImgCaption> : null}
+    </StyledImgWrapper>
+  );
+};
+
+const StyledImgWrapper = styled.div`
+  margin-bottom: 16px;
+  text-align: center;
+`;
+
+const StyledImg = styled.img`
+  margin: auto;
+`;
+
+const StyledImgCaption = styled.p`
+  color: ${(props) => props.theme.color.text.secondary};
 `;
 
 const StyledIFrameWrapper = styled.span``;

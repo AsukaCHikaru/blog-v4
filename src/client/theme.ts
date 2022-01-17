@@ -4,6 +4,7 @@ export const theme: DefaultTheme = {
   color: {
     text: {
       primary: "#131313",
+      secondary: "#333333",
       link: "#0d69da",
       tag: "#555555",
       date: "#333333",
