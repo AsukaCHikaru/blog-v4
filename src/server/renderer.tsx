@@ -9,6 +9,7 @@ import {
   QueryClientProvider,
 } from "react-query";
 import { ServerStyleSheet } from "styled-components";
+import { HelmetProvider, FilledContext } from "react-helmet-async";
 
 import { App } from "client/App";
 import { parseNotionPageListResponse } from "client/utils/parsers";
@@ -36,7 +37,6 @@ export const renderer = async (
   }
 
   let htmlBody = "";
-  // todo: helmet
 
   // React Query prefetch
   const queryClient = new QueryClient();
@@ -70,13 +70,19 @@ export const renderer = async (
   const sheet = new ServerStyleSheet();
   let styleTags = "";
 
+  // React Helmet Async
+  const helmetContext = {};
+  let helmet;
+
   try {
     htmlBody = ReactDOMServer.renderToString(
       sheet.collectStyles(
         <QueryClientProvider client={queryClient}>
           <Hydrate state={dehydratedState}>
             <StaticRouter location={req.url}>
-              <App />
+              <HelmetProvider context={helmetContext}>
+                <App />
+              </HelmetProvider>
             </StaticRouter>
           </Hydrate>
         </QueryClientProvider>
@@ -87,6 +93,7 @@ export const renderer = async (
   } catch (error) {
     console.error(error);
   } finally {
+    helmet = helmetContext as FilledContext;
     sheet.seal();
   }
 
@@ -94,7 +101,11 @@ export const renderer = async (
     <!DOCTYPE HTML>
     <html>
       <head>
+        ${helmet.helmet.title.toString()}
+        ${helmet.helmet.link.toString()}
+        ${helmet.helmet.meta.toString()}
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
         ${styleTags}
         <script defer src="/static/bundle.js"></script>
         <style>

@@ -9,6 +9,7 @@ import { usePostList } from "client/hooks/usePostList";
 import { Footer } from "client/components/Footer";
 import { Scroller } from "client/components/Scroller";
 import { Layout } from "client/components/Layout";
+import { Helmet } from "client/components/Helmet";
 
 export const PostListPage: React.VFC = () => {
   const postList = usePostList();
@@ -35,19 +36,25 @@ export const PostListPage: React.VFC = () => {
   // todo: no matched category or tag
 
   return (
-    <Scroller>
-      <Layout>
-        <StyledContainer>
-          <PostListPageHeader />
-          <div>
-            {filteredPostList.map((postSummary) => (
-              <PostLink postSummary={postSummary} key={postSummary.pathname} />
-            ))}
-          </div>
-          <Footer />
-        </StyledContainer>
-      </Layout>
-    </Scroller>
+    <>
+      <Helmet />
+      <Scroller>
+        <Layout>
+          <StyledContainer>
+            <PostListPageHeader />
+            <div>
+              {filteredPostList.map((postSummary) => (
+                <PostLink
+                  postSummary={postSummary}
+                  key={postSummary.pathname}
+                />
+              ))}
+            </div>
+            <Footer />
+          </StyledContainer>
+        </Layout>
+      </Scroller>
+    </>
   );
 };
 

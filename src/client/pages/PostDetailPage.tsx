@@ -10,6 +10,7 @@ import { Footer } from "client/components/Footer";
 import { PostDetailPageFooter } from "client/components/PostDetailPageFooter";
 import { Scroller } from "client/components/Scroller";
 import { Layout } from "client/components/Layout";
+import { Helmet } from "client/components/Helmet";
 
 interface OwnProps {}
 
@@ -36,13 +37,16 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   }
 
   return (
-    <Scroller>
-      <Layout>
-        <PostDetailPageHeader postSummary={postSummary} />
-        <PostDetailBody postDetail={postDetail.data} />
-        <PostDetailPageFooter />
-        <Footer />
-      </Layout>
-    </Scroller>
+    <>
+      <Helmet postSummary={postSummary} />
+      <Scroller>
+        <Layout>
+          <PostDetailPageHeader postSummary={postSummary} />
+          <PostDetailBody postDetail={postDetail.data} />
+          <PostDetailPageFooter />
+          <Footer />
+        </Layout>
+      </Scroller>
+    </>
   );
 };

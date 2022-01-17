@@ -8,6 +8,7 @@ import {
   QueryClientProvider,
 } from "react-query";
 import { ThemeProvider } from "styled-components";
+import { HelmetProvider } from "react-helmet-async";
 
 import { App } from "client/App";
 import { theme } from "client/theme";
@@ -20,9 +21,11 @@ ReactDOM.hydrate(
   <QueryClientProvider client={queryClient}>
     <Hydrate state={dehydratedState}>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
+        <HelmetProvider>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </HelmetProvider>
       </BrowserRouter>
     </Hydrate>
   </QueryClientProvider>,
