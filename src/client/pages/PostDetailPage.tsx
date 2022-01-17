@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { usePostList } from "client/hooks/usePostList";
 import { usePostDetail } from "client/hooks/usePostDetail";
@@ -13,8 +13,12 @@ interface OwnProps {}
 
 export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   const { pathname } = useParams<PostDetailPageParams>();
+  const [searchParams] = useSearchParams();
   const postList = usePostList();
-  const postDetail = usePostDetail(pathname || "");
+  const postDetail = usePostDetail(
+    pathname || "",
+    searchParams.get("lan") || undefined
+  );
   const postSummary = React.useMemo(
     () => postList.data?.find((post) => post.pathname === pathname),
     [postList, pathname]

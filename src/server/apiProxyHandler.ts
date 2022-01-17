@@ -23,11 +23,16 @@ export const apiProxyHandler = async (
 
   if (/\/api\/postDetail\/\w+/.test(req.path)) {
     const postPathname = req.path.replace("/api/postDetail/", "");
+    const postLan = req.query.lan;
+
     try {
       const postList = parseNotionPageListResponse(await getNotionPageList());
-      const postId = postList.find(
-        (post) => post.pathname === postPathname
-      )?.id;
+      const post = postList.find((post) => post.pathname === postPathname);
+
+      const postId =
+        postLan === "zhTW"
+          ? post?.id_zhTW?.replace(/.+\/\w+-(\w+)/, "$1")
+          : post?.id;
 
       if (!postId) {
         res.status(404).send({ status: 404, error: "Post not found!" });

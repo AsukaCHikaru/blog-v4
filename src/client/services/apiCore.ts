@@ -20,9 +20,10 @@ export const getPostList = async () => {
   return parseNotionPageListResponse(response.data);
 };
 
-export const getPostDetail = async (id: string) => {
+export const getPostDetail = async (id: string, lan?: string) => {
   const response = await axios.get<NotionPageChildrenResponse>(
-    `${POST_DETAIL_API_ENDPOINT}/${id}`
+    `${POST_DETAIL_API_ENDPOINT}/${id}`,
+    { params: { lan } }
   );
 
   return response.data;
