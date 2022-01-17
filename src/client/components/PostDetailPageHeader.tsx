@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { PostSummary } from "client/types";
 import { parseDateToEn } from "client/utils/dateTimeUtils";
+import { lanName } from "client/constants/string";
 
 interface OwnProps {
   postSummary: PostSummary;
@@ -12,8 +13,16 @@ interface OwnProps {
 export const PostDetailPageHeader: React.VFC<OwnProps> = ({ postSummary }) => {
   return (
     <StyledContainer>
-      <StyledTitle>{postSummary.title}</StyledTitle>
-      {/** todo: lan */}
+      <StyledTitleContainer>
+        <StyledTitle>{postSummary.title}</StyledTitle>
+        {postSummary.language.map((lan, i) => (
+          <StyledPostLan
+            to={`/post/${postSummary.pathname}${i === 0 ? "" : `?lan=${lan}`}`}
+          >
+            {lanName[lan]}
+          </StyledPostLan>
+        ))}
+      </StyledTitleContainer>
       <StyledPublishDate>
         {parseDateToEn(postSummary.publishedDate)}
       </StyledPublishDate>
@@ -32,7 +41,11 @@ const StyledContainer = styled.div`
   margin-bottom: 40px;
 `;
 
+const StyledTitleContainer = styled.div``;
+
 const StyledTitle = styled.h1`
+  display: inline;
+  margin-right: 5px;
   font-size: 50px;
   line-height: 70px;
   font-weight: 700;
@@ -41,6 +54,13 @@ const StyledTitle = styled.h1`
     font-size: 30px;
     line-height: 40px;
   }
+`;
+
+const StyledPostLan = styled(Link)`
+  margin: 0 5px;
+  padding-top: 55px;
+  font-size: 15px;
+  line-height: 15px;
 `;
 
 const StyledPublishDate = styled.div`
