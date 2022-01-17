@@ -1,4 +1,4 @@
-import { PostCategory, PostSummary } from "client/types";
+import { PostCategory, PostLanguage, PostSummary } from "client/types";
 import { NotionPage, NotionPageListResponse } from "client/types/notion";
 
 export const parseNotionPageListResponse = (
@@ -22,7 +22,7 @@ const parseNotionPageObjectToPostSummary = (
       [],
     language:
       pageObject.properties?.language.multi_select.map(
-        (select) => select.name
+        (select) => select.name as PostLanguage
       ) || [],
     id_zhTW: pageObject.properties?.link_zhTW?.url || undefined,
   };

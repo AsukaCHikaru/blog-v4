@@ -1,5 +1,7 @@
 export type PostCategory = "gaming" | "programming" | "others";
 
+export type PostLanguage = "enUS" | "zhTW";
+
 export type PostSummary = {
   id: string;
   title: string;
@@ -7,7 +9,7 @@ export type PostSummary = {
   category: PostCategory;
   tags: string[];
   publishedDate: string;
-  language: string[];
+  language: PostLanguage[];
   id_zhTW?: string;
 };
 
