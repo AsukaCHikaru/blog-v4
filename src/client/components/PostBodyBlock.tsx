@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
+import * as prism from "prismjs";
 
 import { NotionBlock, NotionRichTextObject } from "client/types/notion";
-import { CodeBlock } from "./CodeBlock";
 
 interface OwnProps {
   block: NotionBlock;
@@ -222,4 +222,32 @@ const StyledIFrame = styled.iframe`
     width: 320px;
     height: 180px;
   }
+`;
+
+interface CodeProps {
+  children: React.ReactNode;
+}
+
+const CodeBlock: React.VFC<CodeProps> = ({ children }) => {
+  React.useEffect(() => {
+    prism.highlightAll();
+  }, []);
+  return (
+    <div>
+      <pre>
+        <StyledCodeBlock className={`language-javascript`}>
+          {children}
+        </StyledCodeBlock>
+      </pre>
+    </div>
+  );
+};
+
+const StyledCodeBlock = styled.code`
+  display: inline-block;
+  width: 100%;
+  padding: 0;
+  font-size: 15px;
+  overflow-x: scroll;
+  line-height: 1.5;
 `;
