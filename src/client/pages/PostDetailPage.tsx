@@ -11,6 +11,8 @@ import { PostDetailPageFooter } from "client/components/PostDetailPageFooter";
 import { Scroller } from "client/components/Scroller";
 import { Layout } from "client/components/Layout";
 import { Helmet } from "client/components/Helmet";
+import { PostDetailPageLoadingHeader } from "client/components/PostDetailPageLoadingHeader";
+import { PostDetailPageLoadingBody } from "client/components/PostDetailPageLoadingBody";
 
 interface OwnProps {}
 
@@ -33,7 +35,12 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
     !postSummary ||
     !postDetail.data
   ) {
-    return <div>loading</div>;
+    return (
+      <Layout>
+        <PostDetailPageLoadingHeader />
+        <PostDetailPageLoadingBody />
+      </Layout>
+    );
   }
 
   return (
