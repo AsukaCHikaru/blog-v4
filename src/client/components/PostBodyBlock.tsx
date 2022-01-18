@@ -71,7 +71,18 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
   if (block.type === "divider") {
     return <DividerBlock />;
   }
-  // todo: video
+  if (block.type === "video") {
+    if (block.video.type === "external") {
+      return (
+        <StyledIFrameWrapper className="iframeWrapper" key={block.id}>
+          <StyledIFrame
+            id="ytplayer"
+            src={block.video.external.url.replace(/watch\?v=/, "embed/")}
+          />
+        </StyledIFrameWrapper>
+      );
+    }
+  }
   // todo: bookmark
   return null;
 };
@@ -214,12 +225,16 @@ const StyledImgCaption = styled.p`
   color: ${(props) => props.theme.color.text.secondary};
 `;
 
-const StyledIFrameWrapper = styled.span``;
+const StyledIFrameWrapper = styled.div`
+  display: flex;
+  margin-bottom: 32px;
+`;
 
 const StyledIFrame = styled.iframe`
   width: 656px;
   height: 369px;
   margin: 0 auto;
+  border: none;
 
   @media (max-width: 400px) {
     width: 320px;
