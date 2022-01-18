@@ -103,6 +103,11 @@ type NotionBookmarkBlock = NotionBlockBase & {
   bookmark: NotionBookmarkBlock;
 };
 
+type NotionDividerBlock = NotionBlockBase & {
+  type: "divider";
+  devider: {};
+};
+
 export type NotionBlock =
   | NotionParagraphBlock
   | NotionHeading1Block
@@ -113,7 +118,8 @@ export type NotionBlock =
   | NotionCodeBlock
   | NotionImageBlock
   | NotionVideoBlock
-  | NotionBookmarkBlock;
+  | NotionBookmarkBlock
+  | NotionDividerBlock;
 
 type NotionRichTextObject = {
   type: "text";

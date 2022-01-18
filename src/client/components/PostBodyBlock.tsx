@@ -68,6 +68,9 @@ export const PostBodyBlock: React.VFC<OwnProps> = ({ block }) => {
       );
     }
   }
+  if (block.type === "divider") {
+    return <DividerBlock />;
+  }
   // todo: video
   // todo: bookmark
   return null;
@@ -250,4 +253,14 @@ const StyledCodeBlock = styled.code`
   font-size: 15px;
   overflow-x: scroll;
   line-height: 1.5;
+`;
+
+const DividerBlock: React.VFC = () => {
+  return <StyledDivider />;
+};
+
+const StyledDivider = styled.div`
+  width: 80%;
+  margin: 32px auto;
+  border-bottom: solid 1px ${(props) => props.theme.color.text.secondary};
 `;
