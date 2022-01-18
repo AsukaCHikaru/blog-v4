@@ -15,13 +15,17 @@ export const PostDetailPageHeader: React.VFC<OwnProps> = ({ postSummary }) => {
     <StyledContainer>
       <StyledTitleContainer>
         <StyledTitle>{postSummary.title}</StyledTitle>
-        {postSummary.language.map((lan, i) => (
-          <StyledPostLan
-            to={`/post/${postSummary.pathname}${i === 0 ? "" : `?lan=${lan}`}`}
-          >
-            {lanName[lan]}
-          </StyledPostLan>
-        ))}
+        {postSummary.language.length !== 1
+          ? postSummary.language.map((lan, i) => (
+              <StyledPostLan
+                to={`/post/${postSummary.pathname}${
+                  i === 0 ? "" : `?lan=${lan}`
+                }`}
+              >
+                {lanName[lan]}
+              </StyledPostLan>
+            ))
+          : null}
       </StyledTitleContainer>
       <StyledPublishDate>
         {parseDateToEn(postSummary.publishedDate)}
