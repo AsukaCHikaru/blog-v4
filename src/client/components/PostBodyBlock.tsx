@@ -128,6 +128,10 @@ const StyledP = styled.p`
   line-height: 32px;
   margin-bottom: 32px;
   white-space: pre-wrap;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledBold = styled.span`
@@ -277,5 +281,5 @@ const DividerBlock: React.VFC = () => {
 const StyledDivider = styled.div`
   width: 80%;
   margin: 32px auto;
-  border-bottom: solid 1px ${(props) => props.theme.color.text.secondary};
+  border-bottom: solid 1px ${(props) => props.theme.color.text.third};
 `;

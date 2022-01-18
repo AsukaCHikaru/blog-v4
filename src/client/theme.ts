@@ -5,6 +5,7 @@ export const theme: DefaultTheme = {
     text: {
       primary: "#131313",
       secondary: "#333333",
+      third: "#aaaaaa",
       link: "#0d69da",
       tag: "#555555",
       date: "#333333",
