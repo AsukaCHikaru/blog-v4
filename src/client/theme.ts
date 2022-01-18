@@ -8,6 +8,7 @@ export const theme: DefaultTheme = {
       link: "#0d69da",
       tag: "#555555",
       date: "#333333",
+      category: "#737373",
     },
     background: {
       primary: "#eaeaea",

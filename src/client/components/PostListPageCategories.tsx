@@ -34,6 +34,9 @@ export const PostListPageCategories: React.VFC = () => {
           selected={params.category === "others"}
         />
       </StyledCategoryContainer>
+      <StyledAboutLink href="https://asukachikaru.com" target="_blank">
+        ABOUT
+      </StyledAboutLink>
       <PostListPageTagItem tag={params.tag} />
     </StyledContainer>
   );
@@ -104,6 +107,24 @@ const StyledCategory = styled(Link)<{ selected: boolean }>`
   &:first-of-type {
     border-left: none;
     padding-left: 0;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoint.mobile}) {
+    font-size: 15px;
+  }
+`;
+
+const StyledAboutLink = styled.a`
+  padding: 0 10px;
+  font-family: "Courier New", Courier, "Noto Sans JP", monospace;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 100;
+  color: ${(props) => props.theme.color.text.category};
+  border-left: solid 1px #131313;
+
+  &:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoint.mobile}) {
