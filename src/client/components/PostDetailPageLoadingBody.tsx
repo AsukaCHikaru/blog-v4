@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import { LoadingAnimation } from "./LoadingAnimation";
 
 export const PostDetailPageLoadingBody: React.VFC = () => {
   return (
@@ -19,9 +20,8 @@ const StyledContainer = styled.div`
   flex-direction: column;
 `;
 
-const StyledParagraph = styled.div<{ height: number }>`
+const StyledParagraph = styled(LoadingAnimation)<{ height: number }>`
   width: 100%;
   height: ${(props) => props.height}px;
   margin: 7px 0 32px;
-  background-color: #bbb;
 `;

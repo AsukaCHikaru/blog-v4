@@ -1,6 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
+import { LoadingAnimation } from "client/components/LoadingAnimation";
+
 export const PostDetailPageLoadingHeader: React.VFC = () => {
   return (
     <StyledContainer>
@@ -21,18 +23,16 @@ const StyledContainer = styled.div`
   flex-direction: column;
 `;
 
-const StyledTitle = styled.div`
-  background-color: #bbb;
+const StyledTitle = styled(LoadingAnimation)`
   height: 50px;
   width: 400px;
   margin: 10px 0;
 `;
 
-const StyledPublishedDate = styled.div`
+const StyledPublishedDate = styled(LoadingAnimation)`
   margin-top: 10px;
   height: 20px;
   width: 120px;
-  background-color: #bbb;
 `;
 
 const StyledTagContainer = styled.div`
@@ -40,11 +40,10 @@ const StyledTagContainer = styled.div`
   display: flex;
 `;
 
-const StyledTag = styled.div`
+const StyledTag = styled(LoadingAnimation)`
   margin: 0 15px;
   height: 20px;
   width: 80px;
-  background-color: #bbb;
 
   &:first-of-type {
     margin-left: 0;
