@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && webpack --mode=production -c webpack.config.client.ts && webpack --mode=production -c webpack.config.server.ts",
-    "start": "node dist/server/server.bundle.js"
+    "start": "npm run build && node dist/server/server.bundle.js"
   },
   "repository": {
     "type": "git",
