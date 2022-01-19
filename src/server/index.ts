@@ -14,4 +14,6 @@ app.use(apiProxyHandler);
 
 app.use(renderer);
 
-app.listen(APP_PORT);
+app.listen(APP_PORT, () => {
+  console.log(`Server is listening on ${APP_PORT}`);
+});
