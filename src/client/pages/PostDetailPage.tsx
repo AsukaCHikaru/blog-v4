@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { usePostList } from "client/hooks/usePostList";
 import { usePostDetail } from "client/hooks/usePostDetail";
@@ -18,6 +18,7 @@ interface OwnProps {}
 
 export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
   const { pathname } = useParams<PostDetailPageParams>();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const postList = usePostList();
   const postDetail = usePostDetail(
@@ -28,6 +29,10 @@ export const PostDetailPage: React.VFC<OwnProps> = ({}) => {
     () => postList.data?.find((post) => post.pathname === pathname),
     [postList, pathname]
   );
+
+  if (postDetail.isError) {
+    navigate("/404");
+  }
 
   if (
     postList.isLoading ||

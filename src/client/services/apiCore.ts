@@ -21,10 +21,14 @@ export const getPostList = async () => {
 };
 
 export const getPostDetail = async (id: string, lan?: string) => {
-  const response = await axios.get<NotionPageChildrenResponse>(
-    `${POST_DETAIL_API_ENDPOINT}/${id}`,
-    { params: { lan } }
-  );
+  try {
+    const response = await axios.get<NotionPageChildrenResponse>(
+      `${POST_DETAIL_API_ENDPOINT}/${id}`,
+      { params: { lan } }
+    );
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    throw new Error("404");
+  }
 };

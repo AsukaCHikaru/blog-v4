@@ -8,6 +8,7 @@ export const usePostDetail = (pathname: string, lan?: string) => {
     () => getPostDetail(pathname, lan),
     {
       enabled: !!pathname,
+      retry: false,
     }
   );
 };

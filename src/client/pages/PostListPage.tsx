@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { PostListPageParams } from "client/types";
 import { PostListPageHeader } from "client/components/PostListPageHeader";
@@ -14,6 +14,7 @@ import { Helmet } from "client/components/Helmet";
 export const PostListPage: React.VFC = () => {
   const postList = usePostList();
   const params = useParams<PostListPageParams>();
+  const navigate = useNavigate();
 
   if (postList.isLoading || !postList.data) {
     return <div>loading</div>;
@@ -32,8 +33,9 @@ export const PostListPage: React.VFC = () => {
     return postList.data;
   }, [params, postList]);
 
-  // todo: error handling
-  // todo: no matched category or tag
+  if (filteredPostList.length === 0) {
+    navigate("/404");
+  }
 
   return (
     <>
