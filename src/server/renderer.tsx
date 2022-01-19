@@ -107,7 +107,8 @@ export const renderer = async (
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="UTF-8">
         ${styleTags}
-        <script defer src="/static/bundle.js"></script>
+        <script defer src="/static/main.bundle.js"></script>
+        <script defer src="/static/vendor.bundle.js"></script>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&display=swap');
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400&display=swap');
