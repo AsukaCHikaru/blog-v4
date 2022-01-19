@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import { PostCategory, PostListPageParams } from "client/types";
 
@@ -13,13 +13,14 @@ const categoryText: Record<PostCategory | "all", string> = {
 
 export const PostListPageCategories: React.VFC = () => {
   const params = useParams<PostListPageParams>();
+  const location = useLocation();
 
   return (
     <StyledContainer>
       <StyledCategoryContainer>
         <PostListPageCategoryItem
           type="all"
-          selected={!params.category && !params.tag}
+          selected={location.pathname === "/"}
         />
         <PostListPageCategoryItem
           type="gaming"
