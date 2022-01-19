@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack --mode=production -c webpack.config.client.ts && webpack --mode=production -c webpack.config.server.ts",
+    "build": "rm -rf dist && concurrently 'webpack --mode=production -c webpack.config.client.ts' 'webpack --mode=production -c webpack.config.server.ts'",
     "start": "npm run build && node dist/server/server.bundle.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "axios": "0.24.0",
     "babel": "6.23.0",
     "babel-loader": "8.2.3",
+    "concurrently": "7.0.0",
     "dayjs": "1.10.7",
     "express": "4.17.2",
     "fastify": "3.25.3",
