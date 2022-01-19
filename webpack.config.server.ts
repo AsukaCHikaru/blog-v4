@@ -39,6 +39,7 @@ const config: webpack.Configuration = {
         NOTION_API_TOKEN: JSON.stringify(process.env.NOTION_API_TOKEN) || "",
         NOTION_DATABASE_ID:
           JSON.stringify(process.env.NOTION_DATABASE_ID) || "",
+        PORT: JSON.stringify(process.env.PORT) || 3000,
       },
     }),
   ],
